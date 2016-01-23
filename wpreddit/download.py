@@ -18,9 +18,25 @@ def download_image(url, title):
         img = Image.open(f)
         if config.resize:
             config.log("resizing the downloaded wallpaper")
-            img = ImageOps.fit(img, (config.minwidth, config.minheight), Image.ANTIALIAS)
+            if config.centerCrop:
+                img = ImageOps.fit(img, (config.minwidth, config.minheight), Image.ANTIALIAS)
+            else:
+                img.thumbnail((config.minwidth, config.minheight), resample=Image.ANTIALIAS)
         if config.settitle:
             img = set_image_title(img, title)
+        if not config.centerCrop:
+            newimg = Image.new("RGB", (config.minwidth, config.minheight))
+            cfgaspect = config.minwidth / config.minheight
+            imgaspect = img.size[0] / img.size[1]
+            if cfgaspect > imgaspect:
+                # Vertical black bars
+                startx = round((config.minwidth - img.size[0]) / 2)
+                newimg.paste(img, (startx, 0))
+            else:
+                # Horizontal black bars
+                starty = round((config.minheight - img.size[1]) / 2)
+                newimg.paste(img, (0, starty))
+            img = newimg
         if config.opsys == "Windows":
             img.save(config.walldir + '\\wallpaper.bmp', "BMP")
         else:

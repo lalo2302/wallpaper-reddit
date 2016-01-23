@@ -22,6 +22,7 @@ titleoffset_x = 0
 titleoffset_y = 0
 maxlinks = 0
 resize = False
+centerCrop = False
 settitle = False
 randomsub = False
 blacklistcurrent = False
