@@ -14,6 +14,9 @@ def run():
         if config.save:
             wallpaper.save_wallpaper()
             sys.exit(0)
+        if config.browse:
+            wallpaper.open_path()
+            sys.exit(0)
         if config.startup:
             connection.wait_for_connection(config.startupattempts, config.startupinterval)
         # make sure you're actually connected to reddit

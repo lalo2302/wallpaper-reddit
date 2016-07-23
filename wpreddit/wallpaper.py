@@ -4,6 +4,7 @@ import random
 import re
 import shutil
 import sys
+import subprocess
 from subprocess import Popen, PIPE
 
 from wpreddit import config
@@ -91,3 +92,15 @@ def save_wallpaper():
         f.write('\n' + 'wallpaper' + str(wpcount) + ': ' + title)
 
     print("Current wallpaper saved to " + newpath)
+
+def open_path():
+    path = config.savedir
+    if not os.path.exists(path):
+        print("You haven't saved anything")
+        return
+    if config.opsys == 'Windows':
+        os.startfile(path)
+    elif config.opsys == 'Darwin':
+        subprocess.Popen(["open", path])
+    else:
+        subprocess.Popen(["xdg-open", path])
