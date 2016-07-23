@@ -12,6 +12,7 @@ force_dl = False
 startupinterval = 0
 startupattempts = 0
 save = False
+browse = False
 subs = []
 minwidth = 0
 minheight = 0
@@ -142,10 +143,12 @@ def parse_args():
                         help="will pick a random subreddit from the ones provided instead of turning them into a multireddit",
                         action="store_true")
     parser.add_argument("--settitle", help="write title over the image", action="store_true")
+    parser.add_argument("--browse", help="browse the wallpapers you have saved", action="store_true")
     args = parser.parse_args()
     global subs
     global verbose
     global save
+    global browse
     global force_dl
     global startup
     global resize
@@ -156,6 +159,7 @@ def parse_args():
         subs = args.subreddits
     verbose = args.verbose
     save = args.save
+    browse = args.browse
     startup = args.startup
     force_dl = args.force
     if args.resize:
